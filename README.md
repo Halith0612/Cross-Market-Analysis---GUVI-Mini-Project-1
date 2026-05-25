@@ -1,33 +1,44 @@
-# Cross_Mtk_Analysis
-This project integrates data from different sources into a unified SQLite database and enables users to explore market trends, compare assets, and gain insights through dynamic visualizations.
+# 📊💹 Cross Market Analysis Dashboard
+---
+## 🔍 Project Description
 
-# 📊 Cross Market Analysis Dashboard
+The Cross Market Analysis Dashboard is an interactive data visualization web application built using Streamlit. It provides a unified view of multiple financial markets including cryptocurrencies, stocks, and oil prices, enabling users to analyze trends, compare assets, and explore cross-market relationships.
 
-An interactive Streamlit dashboard that analyzes relationships between:
+The system integrates data from a SQL database (TiDB/MySQL-compatible) and presents it through dynamic charts powered by Plotly, making financial data analysis simple, fast, and interactive.
 
-* 🪙 Cryptocurrencies (BTC, ETH, etc.)
-* 🛢 Oil Prices
-* 📈 Stock Market (Nifty / S&P 500)
-
+This project is designed for data analysis, financial insight generation, and learning full-stack data dashboard development using Python.
+---
 ## 🚀 Features
+### 📈 Cryptocurrency Analysis
+* Top coins tracking
+* Price trends and market cap insights
+* Interactive coin selection
+---
+### 📊 Stock Market Analysis
+* Major index tracking (e.g., S&P 500, NIFTY)
+* Historical performance visualization
+---
+### 🛢️ Oil Price Analysis
+* Global oil price trends
+* Time-series visualization
+🔗 Cross Market Comparison
+* Compare crypto vs stocks vs commodities
+* Identify correlations and trends
+### 🗄️ Database Integration
+* SQL-based data loading
+* Efficient querying and preprocessing
+### 📊 Interactive Dashboard
+* Built with Streamlit
+* Real-time filtering and selection
+* Plotly-powered visualizations
+---
+## 📊 Project Insights
+* Bitcoin and Ethereum show higher volatility compared to traditional stocks
+* Oil prices often react strongly to global economic events
+* Stock indices show more stable long-term growth trends compared to crypto
+* Cross-market comparison helps identify risk vs stability assets
+---
+## Mohamed Halith M K 
 
-* Multi-market data visualization
-* Interactive date filtering
-* Coin-wise crypto analysis
-* Cross-market comparison (Crypto vs Oil vs Stocks)
-* SQL-powered queries
 
-## 🛠 Tech Stack
-
-* Python
-* Streamlit
-* Pandas
-* Plotly
-* SQLite
-
-
-
-## 📌 Author
-
-Mohamed Halith
 
