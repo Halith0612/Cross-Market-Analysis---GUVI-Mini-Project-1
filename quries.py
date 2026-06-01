@@ -6,11 +6,11 @@ queries = {
                             WHERE total_supply IS NOT NULL AND total_supply > 0 AND circulating_supply >= 0.9 * total_supply 
                             AND circulating_supply IS NOT NULL;""",
 
-                        "Get coins that are within 10 of their all-time-high (ATH)": """ SELECT * FROM cryptocurrencies 
+                        "Get coins that are within 10pct of their all-time-high (ATH)": """ SELECT coin_id, current_price FROM cryptocurrencies 
                             WHERE current_price >= 0.9 * ath AND current_price IS NOT NULL ORDER BY current_price DESC;""",
 
-                        "Find the average market cap rank of coins with volume above $1B" : """SELECT AVG(market_cap_rank) 
-                            FROM cryptocurrencies WHERE total_volume > 1000000000 AND total_volume IS NOT NULL;""",
+                        "Find the average market cap rank of coins with volume above $1B" : """SELECT coin_name, AVG(market_cap_rank) FROM cryptocurrencies 
+                            WHERE total_volume > 1000000000 AND total_volume IS NOT NULL GROUP BY coin_name;""",
 
                         "Get the most recently updated coin": """SELECT * FROM cryptocurrencies ORDER BY last_updated DESC LIMIT 1;"""},
 
@@ -27,7 +27,7 @@ queries = {
                 "Find the coin with the highest average price over 1 year" : """SELECT coin_id, AVG(price) AS avg_price FROM top_coins 
                     WHERE DATE(date) >= DATE_SUB(CURDATE(), INTERVAL 365 DAY) GROUP BY coin_id ORDER BY avg_price DESC LIMIT 1;""",
 
-                "Get the pct change in Bitcoin price between Feb 2025 and Feb 2026" : """SELECT
+                "Get the pct change in Bitcoin price between Feb 2025 and Feb 2026" : """SELECT coin_id,
                 (
                     (MAX(CASE WHEN DATE(date) BETWEEN '2026-02-01' AND '2026-02-28' THEN price END) 
                     - 
@@ -37,13 +37,13 @@ queries = {
                 ) * 100 AS percentage_change 
                 FROM top_coins WHERE coin_id = 'bitcoin';"""},
 
-    "Oil Prices": {"Get the average oil price per year" : """ SELECT MAX(price) AS highest_price FROM oil_prices 
+    "Oil Prices": {"Find the highest oil price in the last 5 years" : """ SELECT MAX(price) AS highest_price FROM oil_prices 
                     WHERE date >= DATE_SUB(CURDATE(), INTERVAL 5 YEAR);""",
 
                 "Get the average oil price per year" : """SELECT YEAR(date) AS year, AVG(price) AS avg_price FROM oil_prices GROUP BY YEAR(date) 
                     ORDER BY YEAR(date);""",
 
-                "Show oil prices during COVID crash (March–April 2020)" : """SELECT date, price FROM oil_prices 
+                "Show oil prices during COVID crash (March_April 2020)" : """SELECT date, price FROM oil_prices 
                     WHERE date BETWEEN '2020-03-01' AND '2020-04-30' ORDER BY date;""",
 
                 "Find the lowest price of oil in the last 10 years" : """SELECT date, price FROM oil_prices 
@@ -56,15 +56,18 @@ queries = {
                         AND Open IS NOT NULL AND High IS NOT NULL AND Low IS NOT NULL AND Close IS NOT NULL AND Volume IS NOT NULL 
                         ORDER BY Date;""",
                         
-                    "Find the highest closing price for NASDAQ (^IXIC)" : """SELECT MAX(close) AS highest_closing_price 
+                    "Find the highest closing price for NASDAQ (^IXIC)" : """SELECT Ticker, MAX(close) AS highest_closing_price 
                         FROM stks_prices WHERE ticker = '^IXIC';""",
 
-                    "List top 5 days with highest price difference (high - low) for S&P 500 (^GSPC)": """SELECT date, high - low AS price_difference 
+                    "List top 5 days with highest price difference (high - low) for S&P 500 (^GSPC)": """SELECT Ticker, date, high - low AS price_difference 
                         FROM stks_prices WHERE ticker = '^GSPC' ORDER BY price_difference DESC LIMIT 5;""",
 
                     "Get monthly average closing price for each ticker" : """ SELECT Ticker, DATE_FORMAT(Date, '%Y-%m') AS month, 
                         AVG(Close) AS avg_closing_price FROM stks_prices WHERE Close IS NOT NULL AND Date IS NOT NULL 
-                        GROUP BY Ticker, month ORDER BY Ticker, month;"""},
+                        GROUP BY Ticker, month ORDER BY Ticker, month;""",
+                    
+                    "Get average trading volume of NSEI in 2024" : """SELECT Ticker, AVG(Volume) AS avg_trading_volume FROM stks_prices
+                    WHERE Ticker = '^NSEI' AND YEAR(Date) = 2024 GROUP BY Ticker;"""},
 
     "Joint Querries": {"Compare Bitcoin vs Oil average price in 2025" : """ SELECT DATE(c.date) AS date, c.price AS btc_close, o.price AS oil_close
                         FROM top_coins c LEFT JOIN oil_prices o ON DATE(c.date) = DATE(o.date) WHERE c.coin_id = 'bitcoin'
