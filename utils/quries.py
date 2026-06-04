@@ -27,13 +27,13 @@ queries = {
                 "Find the coin with the highest average price over 1 year" : """SELECT coin_id, AVG(price) AS avg_price FROM top_coins 
                     WHERE DATE(date) >= DATE_SUB(CURDATE(), INTERVAL 365 DAY) GROUP BY coin_id ORDER BY avg_price DESC LIMIT 1;""",
 
-                "Get the pct change in Bitcoin price between Feb 2025 and Feb 2026" : """SELECT coin_id,
+                "Get the pct change in Bitcoin price between Jun 2025 and Jun 2026" : """SELECT coin_id,
                 (
-                    (MAX(CASE WHEN DATE(date) BETWEEN '2026-02-01' AND '2026-02-28' THEN price END) 
+                    (MAX(CASE WHEN DATE(date) BETWEEN '2026-06-01' AND '2026-06-30' THEN price END) 
                     - 
-                    MAX(CASE WHEN DATE(date) BETWEEN '2025-02-01' AND '2025-02-28' THEN price END)) 
+                    MAX(CASE WHEN DATE(date) BETWEEN '2025-06-01' AND '2025-06-30' THEN price END)) 
                     / 
-                    MAX(CASE WHEN DATE(date) BETWEEN '2025-02-01' AND '2025-02-28' THEN price END)
+                    MAX(CASE WHEN DATE(date) BETWEEN '2025-06-01' AND '2025-06-30' THEN price END)
                 ) * 100 AS percentage_change 
                 FROM top_coins WHERE coin_id = 'bitcoin';"""},
 
